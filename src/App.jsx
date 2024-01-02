@@ -9,7 +9,7 @@ import ReactFlow, {
   StraightEdge,
 } from 'reactflow';
 import ReactMarkdown from "react-markdown";
-import { Document, Page } from 'react-pdf';
+
 
 import 'reactflow/dist/style.css';
  
@@ -265,7 +265,7 @@ export default function App() {
     <div style={{clear: "left", height: '94vh'}}>
     {/* <PageComponent /> */}
     
-    <iframe src='src\tempPDF.pdf' width='100%' height='600%' />
+    <iframe src='tempPDF.pdf' width='100%' height='600%' />
     </div>
     </>
   );
