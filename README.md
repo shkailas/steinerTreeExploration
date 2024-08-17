@@ -28,8 +28,8 @@ Create a new graph H based on G with the following additions:
 4. Set the edge weight of each edge in H to have a weight of 1.
 
 For demonstration, the images below will show the conversion from some G to an H (edge weights of 1 do not matter for set cover):
-<img alt="Alt text" src="images\before conversion.jpg">
-<img alt="Alt text" src="images\after conversion.jpg">
+<img alt="Alt text" src="src\images\before conversion.jpg">
+<img alt="Alt text" src="src\images\after conversion.jpg">
 
 In this example, nodes {1,2,3,4} are from the nodes of G. We will refer to this as H(V)~v~. Nodes {5,6,7,8} are from the insertions of nodes for each edge of G. We will refer to these nodes as H(V)~e~. Nodes {9,10,11,12} are from the creating the q~v~ for each vertex v in G. We will refer to these nodes as H(V)~0~. Node 13 is node s.
 
