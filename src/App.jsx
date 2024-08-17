@@ -71,7 +71,14 @@ export default function App() {
   const [outBoxValue, setOutBoxValue] = useState('');
 
   const [terminals, setTerminals] = useState('');
- 
+
+  // used for text variables on sidebar
+  const [steinerTreeCost, setSteinerTreeCost] = useState(0);
+  const [steinerTreeTime, setSteinerTreeTime] = useState('');
+  const [mstApproxCost, setMstApproxCost] = useState(0);
+  const [mstApproxTime, setMstApproxTime] = useState('');
+
+
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
@@ -136,9 +143,16 @@ export default function App() {
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
 
-    console.log(result[1]);
-
+    // console.log(result[1]);
+    let sum = 0;
+    for (let item of result[1]){
+      // console.log(item['label']);
+      sum += Number(item['label'])
+    }
+    // console.log(sum);
+    setSteinerTreeCost(sum);
     console.log(`Time taken: ${elapsedTime.toFixed(2)} milliseconds`);
+    setSteinerTreeTime(`${elapsedTime.toFixed(2)} milliseconds`);
     
     setEdges((prevEdges) =>
       prevEdges.map((edge2) => {
@@ -193,16 +207,27 @@ export default function App() {
     // console.log(result[0]);
 
     console.log(`Time taken: ${elapsedTime.toFixed(2)} milliseconds`);
+    setMstApproxTime(`${elapsedTime.toFixed(2)} milliseconds`);
 
+
+
+
+    // Initialize an array to store matching edges
+    const matchingEdges = [];
+
+    let sum=0;
     setEdges((prevEdges) =>
       prevEdges.map((edge2) => {
         // Check if the node corresponds to any edge in the list
         const matchingEdge = result[0].find(
           (edge) => ((edge.source === edge2.source && edge.target === edge2.target) || (edge.source ===edge2.target && edge.target === edge2.source))
         );
-
+        
         // If the node corresponds to an edge in the list, update its style
         if (matchingEdge) {
+          console.log(edge2)
+          
+          
           return {
             ...edge2,
             style: { stroke: '#90EE90' },
@@ -213,6 +238,7 @@ export default function App() {
         return edge2;
       })
     );
+    
 
   }
   
@@ -224,8 +250,8 @@ export default function App() {
     <>
     <div style={{display: 'flex'}} >
       <div style={{ width: '70vw', height: '100vh' }}>
-        <button onClick={()=>{console.log(edges[0])}}>edges?????</button>
-        <button onClick={()=>{console.log(nodes)}}>nodes?????</button>
+        {/* <button onClick={()=>{console.log(edges[0])}}>edges?????</button>
+        <button onClick={()=>{console.log(nodes)}}>nodes?????</button> */}
         <button onClick={addNewNode}>Create Node!</button>
         <button onClick={addNewEdge}>Create Edge!</button>
         <input type="text" value={weightBoxValue} onChange={handleWeightBoxChange} placeholder="Enter edge weight" />
@@ -255,8 +281,19 @@ export default function App() {
     
       <div>
       <input type="text" value={terminals} onChange={handleTerminalChange} placeholder="Terminal indices, comma separated" />
+      <br />
+
       <button onClick={calculateSteinerTree}>Calculate Steiner Tree</button>
+
+      <br />
+      <p>The edge cost of the Steiner tree is {steinerTreeCost}</p>
+      <p>The time elapsed for this calculation was {steinerTreeTime}</p>
+
+      < br />
       <button onClick={calculateMSTapprox}>Calculate MST APPROX</button>
+      < br />
+      <p>The edge cost of the MST approx tree is {mstApproxCost}</p>
+      <p>The time elapsed for this calculation was {mstApproxTime}</p>
       </div>
 
       
